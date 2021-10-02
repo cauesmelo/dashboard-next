@@ -6,7 +6,7 @@ import { Pagination } from '../../components/Pagination';
 
 export const UserList = () => {
   return (
-    <Box>
+    <Box px="4">
       <Header />
 
       <Flex w="100%" maxWidth="1480px" mx="auto" px="6px">

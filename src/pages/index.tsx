@@ -8,6 +8,7 @@ export default function Home() {
       h="100vh"
       align="center"
       justify="center"
+      px="4"
     >
       <Flex
         as="form"
