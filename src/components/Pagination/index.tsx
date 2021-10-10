@@ -51,7 +51,7 @@ export const Pagination = ({
 
         {currentPage > (1 + SIBLINGS_COUNT) && (
           <>
-            <PaginationItem number={1} />
+            <PaginationItem onPageChange={onPageChange} number={1} />
             {currentPage > (2 + SIBLINGS_COUNT) &&
               <Text
                 color="gray.300"
@@ -62,14 +62,14 @@ export const Pagination = ({
         )}
 
         {previousPages.length > 0 && previousPages.map(page => {
-          return <PaginationItem key={page} number={page} />
+          return <PaginationItem onPageChange={onPageChange} key={page} number={page} />
         })}
 
-        <PaginationItem number={currentPage} isCurrent />
+        <PaginationItem onPageChange={onPageChange} number={currentPage} isCurrent />
 
 
         {nextPages.length > 0 && nextPages.map(page => {
-          return <PaginationItem key={page} number={page} />
+          return <PaginationItem onPageChange={onPageChange} key={page} number={page} />
         })}
 
         {currentPage + SIBLINGS_COUNT < lastPage && (
@@ -80,7 +80,7 @@ export const Pagination = ({
                 width="8"
                 textAlign="center"
               >...</Text>}
-            <PaginationItem number={lastPage} />
+            <PaginationItem onPageChange={onPageChange} number={lastPage} />
           </>
         )}
 

@@ -10,10 +10,17 @@ interface UserData {
 
 interface GetUsersResponse {
   users: UserData[];
+  totalCount: number;
 }
 
-export const getUsers = async () => {
-  const { data } = await api.get<GetUsersResponse>('/users');
+export const getUsers = async (page: number) => {
+  const { data, headers } = await api.get<GetUsersResponse>('/users', {
+    params: {
+      page
+    }
+  });
+
+  const totalCount = Number(headers['x-total-count']);
 
   const users = data.users.map(user => {
     return {
@@ -28,11 +35,14 @@ export const getUsers = async () => {
     }
   });
 
-  return users;
+  return {
+    users,
+    totalCount
+  };
 };
 
-export const useUsers = () => {
-  return useQuery('users', getUsers, {
+export const useUsers = (page: number) => {
+  return useQuery(['users', page], () => getUsers(page), {
     staleTime: 1000 * 5 // 5 seconds
   });
 };
