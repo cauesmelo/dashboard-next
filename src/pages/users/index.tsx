@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Button, Icon, Table, Thead, Tr, Th, Checkbox, Tbody, Td, Text, useBreakpointValue, IconButton, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Heading, Button, Icon, Table, Thead, Tr, Th, Checkbox, Tbody, Td, Text, useBreakpointValue, IconButton, Spinner, Link as ChakraLink } from '@chakra-ui/react';
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Sidebar } from '../../components/Sidebar';
@@ -6,6 +6,9 @@ import { Pagination } from '../../components/Pagination';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useUsers } from '../../services/hooks/useUsers';
+import { QueryClient } from 'react-query';
+import { queryClient } from '../../services/queryClient';
+import { api } from '../../services/api';
 
 export const UserList = () => {
 
@@ -17,6 +20,16 @@ export const UserList = () => {
     base: false,
     lg: true,
   });
+
+  const handlePrefetchUser = async (userId: number) => {
+    await queryClient.prefetchQuery(['user', userId], async () => {
+      const response = await api.get(`users/${userId}`);
+
+      return response.data;
+    }, {
+      staleTime: 1000 * 60 * 10, // 10 minutos
+    });
+  }
 
 
   return (
@@ -88,7 +101,9 @@ export const UserList = () => {
 
                           <Td>
                             <Box>
-                              <Text fontWeight="bold">{user.name}</Text>
+                              <ChakraLink color="purple.400" onMouseEnter={() => handlePrefetchUser(+user.id)}>
+                                <Text fontWeight="bold">{user.name}</Text>
+                              </ChakraLink>
                               <Text fontSize="sm" color="gray.300">{user.email}</Text>
                             </Box>
                           </Td>

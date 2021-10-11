@@ -52,7 +52,7 @@ export const makeServer = () => {
         )
       });
       this.post('/users');
-      this.put('/users/:id');
+      this.get('/users/:id');
       this.delete('/users/:id');
 
       this.namespace = '';
