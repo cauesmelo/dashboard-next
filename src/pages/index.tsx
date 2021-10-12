@@ -72,7 +72,7 @@ export default function SignIn() {
             mt="6"
             colorScheme="pink"
             size="lg"
-            isLoading={formState.isSubmitting}
+          // isLoading={formState.isSubmitting}
           >
             Entrar
           </Button>
